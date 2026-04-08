@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Igloo Inc. | Scroll Experience Clone</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Inter:wght@700;900&display=swap"
+    rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+</head>
+
+<body>
+
+  <div id="scroll-proxy"></div>
+
+  <canvas id="webgl-canvas"></canvas>
+
+  <div id="ui-overlay">
+
+    <header class="top-left">
+      <h1>CHARLY</h1>
+      <h2 class="subtitle">Desenvolvedor de Sistemas</h2>
+    </header>
+
+    <aside class="top-right">
+      <span class="manifesto-link">////// Visão Profissional</span>
+      <p class="mission-text">Especialista na engenharia de software moderno. Foco projetar arquiteturas sistêmicas
+        robustas, performance avançada de ponta a ponta e experiências interativas imersivas.</p>
+    </aside>
+
+    <footer class="bottom-left">
+      <button class="sound-toggle">Sound: On</button>
+      <p class="instruction">Scroll down to discover &darr;</p>
+    </footer>
+
+    <!-- Painel de Vidro (Portfolio Overlay) -->
+    <section id="portfolio-panel" class="glass-panel">
+
+      <div class="panel-column">
+        <h3>Linguagens</h3>
+        <div class="skills-icons">
+          <div class="skill-stamp">
+            <i class="devicon-java-plain colored"></i> <span>Java</span>
+          </div>
+          <div class="skill-stamp">
+            <i class="devicon-javascript-plain colored"></i> <span>JavaScript</span>
+          </div>
+        </div>
+
+        <h3>Ferramentas / Skills</h3>
+        <div class="skills-icons">
+          <div class="skill-stamp">
+            <i class="devicon-spring-original colored"></i> <span>Spring Boot</span>
+          </div>
+          <div class="skill-stamp">
+            <i class="devicon-html5-plain colored"></i> <span>HTML5 & CSS3</span>
+          </div>
+          <div class="skill-stamp">
+            <i class="devicon-git-plain colored"></i> <span>Git / DevOps</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-column">
+        <h3>Soft Skills</h3>
+        <div class="soft-skills-tags">
+          <span class="tag">Resolução de Problemas</span>
+          <span class="tag">Pensamento Crítico</span>
+          <span class="tag">Trabalho em Equipe</span>
+          <span class="tag">Comunicação Assertiva</span>
+        </div>
+      </div>
+
+      <div class="panel-column split-projects">
+        <h3>Desenvolvimento de Sistemas</h3>
+        <div class="projects-list">
+          <div class="project-item">
+            <h4>Arquitetura Corporativa (Java)</h4>
+            <p>Modelagem de microsserviços, injeção de dependências e construção de APIs seguras de alta performance.</p>
+          </div>
+          <div class="project-item">
+            <h4>Sistemas Interativos & WebGL</h4>
+            <p>Engenharia imersiva utilizando processamento paralelo em GPU (Three.js) e Single Page Applications.</p>
+          </div>
+        </div>
+        
+        <div class="action-container" style="margin-top: auto; padding-top: 1rem;">
+          <a class="hire-me-btn" href="mailto:contato@exemplo.com">Vamos Trabalhar Juntos <span class="arrow">&rarr;</span></a>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

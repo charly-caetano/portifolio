@@ -1,0 +1,336 @@
+:root {
+    --text-color: #ffffff;
+    --font-brand: 'Inter', sans-serif;
+    --font-mono: 'Roboto Mono', monospace;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    background-color: #05080c; 
+    overflow-x: hidden;
+    overflow-y: scroll;
+    font-family: var(--font-mono);
+    color: var(--text-color);
+}
+
+#scroll-proxy {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 500vh;
+    z-index: -10;
+}
+
+#webgl-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: auto;
+}
+
+#ui-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 10;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.top-left h1, .top-right a, .manifesto-link, .sound-toggle {
+    pointer-events: auto;
+}
+
+.top-left h1 {
+    font-family: var(--font-brand);
+    font-weight: 900;
+    font-size: 3.2rem;
+    letter-spacing: -2px;
+    margin: 0;
+    text-shadow: 0 4px 15px rgba(0,0,0,0.5);
+}
+
+.top-left .subtitle {
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    color: #5da0e8;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 0.5rem;
+}
+
+.top-right {
+    position: absolute;
+    top: 3rem;
+    right: 2.5rem;
+    text-align: right;
+    max-width: 320px;
+}
+
+.manifesto-link {
+    display: inline-block;
+    font-weight: 900;
+    font-size: 1.1rem;
+    letter-spacing: 2.5px;
+    margin-bottom: 1.2rem;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    color: var(--text-color);
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+}
+.manifesto-link:hover {
+    color: #aaddff;
+    text-shadow: 0 0 15px rgba(170, 221, 255, 0.8);
+}
+
+.mission-text {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.9);
+    letter-spacing: 0.5px;
+    font-weight: 500;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+}
+
+.bottom-left {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.sound-toggle {
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    font-family: var(--font-mono);
+    font-size: 1.1rem;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.4s ease;
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+}
+.sound-toggle:hover {
+    color: #aaddff;
+    text-shadow: 0 0 12px rgba(170, 221, 255, 0.8);
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+.instruction {
+    font-size: 1.0rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: rgba(255, 255, 255, 0.8);
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+    animation: bounceOpacity 2.5s infinite;
+}
+
+@keyframes bounceOpacity {
+    0%, 100% { opacity: 0.2; transform: translateY(0); }
+    50% { opacity: 0.8; transform: translateY(4px); }
+}
+
+@media (max-width: 768px) {
+    #ui-overlay { padding: 1.5rem; }
+    .top-right {
+        top: 1.5rem; right: 1.5rem;
+        max-width: 220px;
+    }
+    .top-left h1 { font-size: 2.1rem; }
+    .bottom-left { bottom: 1.5rem; left: 1.5rem; }
+}
+
+/* ========================================= */
+/* PAINEL DE VIDRO (PORTFOLIO OVERLAY)     */
+/* ========================================= */
+
+.glass-panel {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -46%); /* Começa um pouco abaixo para animação suave */
+    width: 85%;
+    max-width: 1050px;
+    background: rgba(10, 15, 25, 0.25);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    display: flex;
+    justify-content: space-between;
+    padding: 3.5rem;
+    gap: 3rem;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+    
+    /* Configuração de Aparição */
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1.5s cubic-bezier(0.2, 0.8, 0.2, 1), transform 1.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.glass-panel.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, -50%); /* Fixa no centro perfeito */
+}
+
+/* Colunas do Portfólio */
+.panel-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.0rem;
+}
+
+.panel-column h3 {
+    font-size: 1.3rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-color);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    padding-bottom: 0.8rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Tecnologias (Devicon) */
+.skills-icons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+.skill-stamp {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    background: rgba(255,255,255, 0.05);
+    padding: 0.7rem 1rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255, 0.1);
+    transition: background 0.3s ease, border-color 0.3s;
+}
+.skill-stamp:hover {
+    background: rgba(255,255,255, 0.12);
+    border-color: rgba(255,255,255, 0.3);
+}
+.skill-stamp i {
+    font-size: 1.8rem;
+}
+
+/* Soft Skills Tags */
+.soft-skills-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    align-content: flex-start;
+}
+.tag {
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 0.6rem 1rem;
+    background: rgba(74, 144, 226, 0.15);
+    color: #79b5fa;
+    border: 1px solid rgba(74, 144, 226, 0.4);
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+}
+
+/* Lista de Projetos */
+.projects-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+.project-item {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 4px solid #5da0e8;
+    transition: all 0.4s ease;
+    cursor: pointer;
+    backdrop-filter: blur(0px);
+}
+.project-item:hover {
+    background: rgba(170, 221, 255, 0.15);
+    border-left-color: #aaddff;
+    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.1), 0 0 20px rgba(170, 221, 255, 0.3);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transform: translateX(4px);
+}
+.project-item h4 {
+    font-size: 1.15rem;
+    font-weight: 900;
+    margin-bottom: 0.5rem;
+    color: #fff;
+}
+.project-item p {
+    font-size: 1.05rem;
+    color: rgba(255,255,255, 0.85);
+    line-height: 1.6;
+}
+
+/* Call to action Profissional */
+.hire-me-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 1.2rem;
+    background: linear-gradient(135deg, #4a90e2 0%, #1e5cb3 100%);
+    color: #ffffff;
+    font-size: 1.15rem;
+    font-weight: 900;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 10px 30px rgba(74, 144, 226, 0.4), inset 0 2px 0 rgba(255, 255, 255, 0.3);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.hire-me-btn .arrow {
+    margin-left: 10px;
+    transition: transform 0.3s ease;
+}
+.hire-me-btn:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 15px 40px rgba(74, 144, 226, 0.6), inset 0 2px 0 rgba(255, 255, 255, 0.5);
+    background: linear-gradient(135deg, #5da0e8 0%, #2a73d3 100%);
+}
+.hire-me-btn:hover .arrow {
+    transform: translateX(6px);
+}
+
+@media (max-width: 1024px) {
+    .glass-panel {
+        flex-direction: column;
+        height: 80vh;
+        overflow-y: auto;
+        padding: 2rem;
+        gap: 2rem;
+    }
+}
